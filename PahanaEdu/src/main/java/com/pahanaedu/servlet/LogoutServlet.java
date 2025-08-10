@@ -7,14 +7,13 @@ import java.io.IOException;
 
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        HttpSession session = request.getSession(false); // Fetch session if exists
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession(false); // get existing session if exists
         if (session != null) {
             session.invalidate();
         }
-        response.sendRedirect("login.jsp");
+        resp.sendRedirect("login.jsp");
     }
 }

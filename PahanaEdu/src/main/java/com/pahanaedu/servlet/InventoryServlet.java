@@ -3,13 +3,13 @@ package com.pahanaedu.servlet;
 import com.pahanaedu.dao.InventoryDAO;
 import com.pahanaedu.model.Inventory;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/inventory")
+//@WebServlet("/inventory")
 public class InventoryServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 

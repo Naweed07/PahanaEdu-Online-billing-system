@@ -1,17 +1,15 @@
-
-
 package com.pahanaedu.servlet;
 
 import com.pahanaedu.dao.AdminDAO;
 import com.pahanaedu.model.Admin;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/register")
+//@WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
     private AdminDAO adminDAO = new AdminDAO();
 

@@ -3,12 +3,12 @@ package com.pahanaedu.servlet;
 import com.pahanaedu.dao.CustomerDAO;
 import com.pahanaedu.model.Customer;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
 import java.io.IOException;
 
-@WebServlet("/bill")
+//@WebServlet("/bill")
 public class BillServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 

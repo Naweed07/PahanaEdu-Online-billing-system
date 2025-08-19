@@ -63,6 +63,7 @@
         <th>Address</th>
         <th>Telephone</th>
         <th>Units Consumed</th>
+        <th>Purchased Books</th>
         <th>Actions</th>
     </tr>
     </thead>
@@ -73,27 +74,30 @@
     %>
         <tr>
             <td><%= c.getAccountNumber() %></td>
-            <td><%= c.getName() %></td>
-            <td><%= c.getAddress() %></td>
-            <td><%= c.getTelephone() %></td>
-            <td><%= c.getUnitsConsumed() %></td>
-            <td>
-                <a href="customers?action=edit&accountNumber=<%= c.getAccountNumber() %>">Edit</a> |
-                <a href="customers?action=delete&accountNumber=<%= c.getAccountNumber() %>" onclick="return confirm('Are you sure you want to delete this customer?');">Delete</a>
-            </td>
+<td><%= c.getName() %></td>
+<td><%= c.getAddress() %></td>
+<td><%= c.getTelephone() %></td>
+<td><%= c.getUnitsConsumed() %></td>
+<td><%= c.getPurchasedBooks() %></td>   <!-- ✅ show JSON string -->
+<td>
+    <a href="customers?action=edit&accountNumber=<%= c.getAccountNumber() %>">Edit</a> |
+    <a href="customers?action=delete&accountNumber=<%= c.getAccountNumber() %>" onclick="return confirm('Are you sure you want to delete this customer?');">Delete</a>
+</td>
+
         </tr>
     <%
             }
         } else {
     %>
         <tr>
-            <td colspan="6" style="text-align:center;">No customers found.</td>
+            <td colspan="7" style="text-align:center;">No customers found.</td>
         </tr>
     <%
         }
     %>
     </tbody>
 </table>
+
 
 <h3><%= (editCustomer != null) ? "Edit Customer" : "Add New Customer" %></h3>
 

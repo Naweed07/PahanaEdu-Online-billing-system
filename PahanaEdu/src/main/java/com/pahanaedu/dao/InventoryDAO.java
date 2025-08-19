@@ -52,7 +52,6 @@ public class InventoryDAO {
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
-
             int rows = stmt.executeUpdate();
             return rows > 0;
 
@@ -105,5 +104,23 @@ public class InventoryDAO {
             e.printStackTrace();
         }
         return items;
+    }
+
+    // NEW METHOD: update stock after billing
+    public boolean updateStock(int bookId, int quantitySold) {
+        String sql = "UPDATE inventory SET stock = stock - ? WHERE id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, quantitySold);
+            stmt.setInt(2, bookId);
+
+            int rows = stmt.executeUpdate();
+            return rows > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

@@ -56,36 +56,92 @@ public class CustomerDAO {
 	}
 
 
+	
+	// Save purchased books for a customer as JSON
+	public boolean updateCustomerPurchases(String accountNumber, List<com.pahanaedu.model.Inventory> purchasedBooks) {
+	    String selectSql = "SELECT purchased_books FROM customer WHERE account_number=?";
+	    String updateSql = "UPDATE customer SET purchased_books=? WHERE account_number=?";
+	    
+	    try (Connection conn = DBConnection.getConnection();
+	         PreparedStatement selectStmt = conn.prepareStatement(selectSql);
+	         PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
+
+	        // Step 1: Get existing purchases
+	        selectStmt.setString(1, accountNumber);
+	        ResultSet rs = selectStmt.executeQuery();
+	        String existingJson = "[]";
+	        if (rs.next() && rs.getString("purchased_books") != null) {
+	            existingJson = rs.getString("purchased_books");
+	        }
+
+	        // Step 2: Build new purchase JSON
+	        StringBuilder json = new StringBuilder();
+	        json.append("{\"datetime\":\"").append(java.time.LocalDateTime.now()).append("\",");
+	        json.append("\"books\":[");
+	        for (int i = 0; i < purchasedBooks.size(); i++) {
+	            com.pahanaedu.model.Inventory book = purchasedBooks.get(i);
+	            json.append("{\"id\":").append(book.getId())
+	                .append(",\"name\":\"").append(book.getBookName())
+	                .append("\",\"price\":").append(book.getPrice())
+	                .append(",\"quantity\":").append(book.getQuantity())
+	                .append("}");
+	            if (i < purchasedBooks.size() - 1) json.append(",");
+	        }
+	        json.append("]}");
+
+	        // Step 3: Append new JSON into array
+	        if (!existingJson.trim().startsWith("[")) {
+	            existingJson = "[" + existingJson + "]";
+	        }
+	        String updatedJson = existingJson.substring(0, existingJson.length() - 1)
+	                              + (existingJson.length() > 2 ? "," : "")
+	                              + json.toString() + "]";
+
+	        // Step 4: Update back to DB
+	        updateStmt.setString(1, updatedJson);
+	        updateStmt.setString(2, accountNumber);
+
+	        int rows = updateStmt.executeUpdate();
+	        return rows > 0;
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+
+	
+	
  // Save purchased books for a customer as JSON
-    public boolean updateCustomerPurchases(String accountNumber, List<com.pahanaedu.model.Inventory> purchasedBooks) {
-        String sql = "UPDATE customer SET purchased_books = ? WHERE account_number=?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            // Convert purchasedBooks list to JSON
-            StringBuilder json = new StringBuilder("[");
-            for (int i = 0; i < purchasedBooks.size(); i++) {
-                com.pahanaedu.model.Inventory book = purchasedBooks.get(i);
-                json.append("{\"id\":").append(book.getId())
-                    .append(",\"name\":\"").append(book.getBookName())
-                    .append("\",\"price\":").append(book.getPrice())
-                    .append(",\"quantity\":").append(book.getQuantity())
-                    .append("}");
-                if (i < purchasedBooks.size() - 1) json.append(",");
-            }
-            json.append("]");
-
-            stmt.setString(1, json.toString());
-            stmt.setString(2, accountNumber);
-
-            int rows = stmt.executeUpdate();
-            return rows > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+//    public boolean updateCustomerPurchases(String accountNumber, List<com.pahanaedu.model.Inventory> purchasedBooks) {
+//        String sql = "UPDATE customer SET purchased_books = ? WHERE account_number=?";
+//        try (Connection conn = DBConnection.getConnection();
+//             PreparedStatement stmt = conn.prepareStatement(sql)) {
+//
+//            // Convert purchasedBooks list to JSON
+//            StringBuilder json = new StringBuilder("[");
+//            for (int i = 0; i < purchasedBooks.size(); i++) {
+//                com.pahanaedu.model.Inventory book = purchasedBooks.get(i);
+//                json.append("{\"id\":").append(book.getId())
+//                    .append(",\"name\":\"").append(book.getBookName())
+//                    .append("\",\"price\":").append(book.getPrice())
+//                    .append(",\"quantity\":").append(book.getQuantity())
+//                    .append("}");
+//                if (i < purchasedBooks.size() - 1) json.append(",");
+//            }
+//            json.append("]");
+//
+//            stmt.setString(1, json.toString());
+//            stmt.setString(2, accountNumber);
+//
+//            int rows = stmt.executeUpdate();
+//            return rows > 0;
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
 
     
     public boolean deleteCustomer(String accountNumber) {

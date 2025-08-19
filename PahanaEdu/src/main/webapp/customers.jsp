@@ -43,9 +43,14 @@
             display: inline-block;
             text-decoration: none;
             color: #007bff;
+            padding:10px 15px;
+            background-color:#6c757d;
+            color:#fff;
+            font-weight:600;
+            border-radius:10px;
         }
         .back-dashboard:hover {
-            text-decoration: underline;
+            background-color:#cfd3d7;
         }
     </style>
 </head>

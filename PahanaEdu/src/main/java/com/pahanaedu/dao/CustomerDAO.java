@@ -110,39 +110,6 @@ public class CustomerDAO {
 	    }
 	}
 
-	
-	
- // Save purchased books for a customer as JSON
-//    public boolean updateCustomerPurchases(String accountNumber, List<com.pahanaedu.model.Inventory> purchasedBooks) {
-//        String sql = "UPDATE customer SET purchased_books = ? WHERE account_number=?";
-//        try (Connection conn = DBConnection.getConnection();
-//             PreparedStatement stmt = conn.prepareStatement(sql)) {
-//
-//            // Convert purchasedBooks list to JSON
-//            StringBuilder json = new StringBuilder("[");
-//            for (int i = 0; i < purchasedBooks.size(); i++) {
-//                com.pahanaedu.model.Inventory book = purchasedBooks.get(i);
-//                json.append("{\"id\":").append(book.getId())
-//                    .append(",\"name\":\"").append(book.getBookName())
-//                    .append("\",\"price\":").append(book.getPrice())
-//                    .append(",\"quantity\":").append(book.getQuantity())
-//                    .append("}");
-//                if (i < purchasedBooks.size() - 1) json.append(",");
-//            }
-//            json.append("]");
-//
-//            stmt.setString(1, json.toString());
-//            stmt.setString(2, accountNumber);
-//
-//            int rows = stmt.executeUpdate();
-//            return rows > 0;
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//    }
-
     
     public boolean deleteCustomer(String accountNumber) {
         String sql = "DELETE FROM customer WHERE account_number=?";

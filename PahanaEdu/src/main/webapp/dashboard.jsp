@@ -21,7 +21,7 @@
     <h1>Welcome, <%= admin.getUsername() %></h1>
 </header>
 
-<a href="logout" class="logout">Logout</a>
+<a href="logout" class="logout">Logout</a><a href="help" class="logout" style="right:120px !important;background-color:#008000 !important;">Help</a>
 
 <div class="dashboard-header-wrapper">
 <div>

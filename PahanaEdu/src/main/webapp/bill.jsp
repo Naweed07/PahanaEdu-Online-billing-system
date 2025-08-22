@@ -38,6 +38,8 @@
 
 <h2>Calculate Customer Bill</h2>
 
+<div style="display:flex;gap:150px;">
+<div>
 <form method="post" action="bill">
     <label>Account Number:</label>
     <input type="text" name="accountNumber" value="<%= (customer != null) ? customer.getAccountNumber() : "" %>" required autofocus/>
@@ -65,6 +67,8 @@
 
     <input type="submit" value="Calculate Bill"/>
 </form>
+</div>
+<div>
 
 <%
     if (customer != null && totalBill != null && books != null && !books.isEmpty()) {
@@ -104,6 +108,12 @@
 <%
     }
 %>
+
+</div>
+
+</div>
+
+
 
 </body>
 </html>
